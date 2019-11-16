@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.Order">
+        <id column="or_id" property="id"/>
+        <result column="or_orgin" property="origin"/>
+        <result column="or_destination" property="destination"/>
+        <result column="or_begin_time" property="beginTime"/>
+        <result column="or_endtime" property="endTime"/>
+        <result column="or_contents" property="contents"/>
+        <result column="or_comments" property="comments"/>
+        <result column="or_cost" property="cost"/>
+        <result column="or_state" property="orderState"/>
+        <result column="or_client_id" property="clientID"/>
+        <result column="or_electrician_id" property="eletricianID"/>
+    </resultMap>
+    <select id="getAllOrders" resultType="org.sang.bean.Order">
+        select * from order;
+    </select>
+    <insert id="addNewOrder" parameterType="org.sang.bean.Order" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order SET or_orgin=#{origin},or_destination=#{destination},or_begin_time=#{beginTime},or_endtime=#{endTime},or_contents=#{contents},or_comments=#{comments},or_cost=#{cost},or_state=#{orderState},or_client_id=#{clientID},or_electrician_id=#{eletricianID}
+    </insert>
+    <select id="getOrderById" parameterType="long" resultMap="BaseResultMap">
+        SELECT ord.* FROM order ord  WHERE  ord.id=#{orid}
+    </select>
+    <update id="updateOrderStateById" >
+        UPDATE order SET or_state=#{state} WHERE or_id = #{OrderId}
+    </update>
+</mapper>
